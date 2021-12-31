@@ -231,13 +231,15 @@ public class GameControl : MonoBehaviour {
                 button_chose1.GetComponent<Button>().onClick.AddListener(Drink3);
                 button_chose2.GetComponent<Button>().onClick.AddListener(delegate {Goback8(player);});
                 break;
-            case 16: //roll the dice, drink and go back the result
+            case 16: //roll the dice drink the result
                 if (!player.GetComponent<FollowThePath>().already_did_this_tile)
                 {
                     just_a_roll = true;
-                    just_a_roll_player = player;
+                    just_a_roll_player = null;
                     player.GetComponent<FollowThePath>().already_did_this_tile = true;
                     Dice.whosTurn--;
+                    if (Dice.whosTurn == 0)
+                        Dice.whosTurn++;
                 }
                 break;
             case 22: //go back 10
@@ -246,16 +248,26 @@ public class GameControl : MonoBehaviour {
                 movedback = true;
                 break;
              case 23: //roll the dice if 6 go back to start
-                if (!player.GetComponent<FollowThePath>().already_did_this_tile)
+              /*  if (!player.GetComponent<FollowThePath>().already_did_this_tile)
                 {
                     if_six_start = true;
                     Dice.whosTurn--;
                     Dice.whosTurn_6 = Dice.whosTurn - 1;
                     player.GetComponent<FollowThePath>().already_did_this_tile = true;
+                }*/
+                break;
+            //case 25: //talvez! coin head or tails!
+            case 26: //roll the dice, drink and go back the result
+                if (!player.GetComponent<FollowThePath>().already_did_this_tile)
+                {
+                    just_a_roll = true;
+                    just_a_roll_player = player;
+                    player.GetComponent<FollowThePath>().already_did_this_tile = true;
+                    if (Dice.whosTurn == 0)
+                        Dice.whosTurn++;
                 }
                 break;
-                //case 25: //talvez! coin head or tails!
-             case 28: //drink and miss a turn
+            case 28: //drink and miss a turn
                 if (!player.GetComponent<FollowThePath>().already_did_this_tile) 
                 { 
                     player.GetComponent<FollowThePath>().turn_miss = true;
@@ -325,6 +337,7 @@ public class GameControl : MonoBehaviour {
     {
         button_chose1.SetActive(false);
         button_chose2.SetActive(false);
+        button_chose2.GetComponent<Button>().onClick.RemoveAllListeners();
     }
     void Goback8(GameObject player)
     {
@@ -333,6 +346,7 @@ public class GameControl : MonoBehaviour {
         player.GetComponent<FollowThePath>().movebackAllowed = true;
         player.GetComponent<FollowThePath>().waypointIndex = player.GetComponent<FollowThePath>().waypointIndex - 9;
         player.GetComponent<FollowThePath>().playerStartWaypoint = player.GetComponent<FollowThePath>().waypointIndex;
+        button_chose2.GetComponent<Button>().onClick.RemoveAllListeners();
     }
     public static void Moveback_AUX(GameObject player, int dice)
     {

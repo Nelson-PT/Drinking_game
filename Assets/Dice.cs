@@ -105,10 +105,10 @@ public class Dice : MonoBehaviour {
         whosTurn++;
         if (whosTurn > number_players)
             whosTurn = 1;
-        if (GameControl.players[whosTurn].GetComponent<FollowThePath>().turn_miss)
+        if (GameControl.players[whosTurn-1].GetComponent<FollowThePath>().turn_miss)
         {
+            GameControl.players[whosTurn - 1].GetComponent<FollowThePath>().turn_miss = false;
             whosTurn++;
-            GameControl.players[whosTurn].GetComponent<FollowThePath>().turn_miss = false;
             if (whosTurn > number_players)
                 whosTurn = 1;
         }
@@ -125,9 +125,13 @@ public class Dice : MonoBehaviour {
             rend.sprite = diceSides[randomDiceSide];
             yield return new WaitForSeconds(0.05f);
         }
+        if (GameControl.just_a_roll_player != null)
+            GameControl.Moveback_AUX(GameControl.just_a_roll_player, randomDiceSide + 1);
         //GameControl.diceSideThrown = randomDiceSide + 1;
-        GameControl.Moveback_AUX(GameControl.just_a_roll_player,randomDiceSide + 1);
         whosTurn++;
+        if (whosTurn > number_players)
+            whosTurn = 1;
+        play_player.text="Player " + Dice.whosTurn + " to play!";
     }
     private IEnumerator Go_back_if_6()
     {
