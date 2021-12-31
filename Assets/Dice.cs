@@ -11,6 +11,7 @@ public class Dice : MonoBehaviour {
     private Sprite[] diceSides;
     private SpriteRenderer rend;
     public static int whosTurn = 1;
+    public static int whosTurn_6 = 0;
     public static bool coroutineAllowed = true;
 
 	// Use this for initialization
@@ -48,13 +49,11 @@ public class Dice : MonoBehaviour {
         if (GameControl.if_six_start)
         {
             StartCoroutine(Go_back_if_6());
-        }
-        if(GameControl.just_a_roll)
+        }else if(GameControl.just_a_roll)
         {
             GameControl.just_a_roll = false;
             StartCoroutine(Just_a_roll());
-        }
-        if (!GameControl.gameOver && coroutineAllowed)
+        }else if (!GameControl.gameOver && coroutineAllowed)
             StartCoroutine("RollTheDice");
     }
 
@@ -106,12 +105,15 @@ public class Dice : MonoBehaviour {
         whosTurn++;
         if (whosTurn > number_players)
             whosTurn = 1;
-        if (GameControl.players[whosTurn - 1].GetComponent<FollowThePath>().turn_miss)
+        if (GameControl.players[whosTurn].GetComponent<FollowThePath>().turn_miss)
         {
             whosTurn++;
-            GameControl.players[whosTurn - 1].GetComponent<FollowThePath>().turn_miss = false;
+            GameControl.players[whosTurn].GetComponent<FollowThePath>().turn_miss = false;
+            if (whosTurn > number_players)
+                whosTurn = 1;
         }
         
+
         //play_player.text = "Player " + whosTurn + " to play!";
     }
     private  IEnumerator Just_a_roll()
@@ -125,10 +127,10 @@ public class Dice : MonoBehaviour {
         }
         //GameControl.diceSideThrown = randomDiceSide + 1;
         GameControl.Moveback_AUX(GameControl.just_a_roll_player,randomDiceSide + 1);
+        whosTurn++;
     }
     private IEnumerator Go_back_if_6()
     {
-        //for (int x = 0; x < 10 - number_players; x++) {
         int randomDiceSide = 0;
         for (int i = 0; i <= 20; i++)
         {
@@ -136,8 +138,12 @@ public class Dice : MonoBehaviour {
             rend.sprite = diceSides[randomDiceSide];
             yield return new WaitForSeconds(0.05f);
         }
-        //GameControl.diceSideThrown = randomDiceSide + 1;
-        //GameControl.Go_to_begin();-> i was here!!!!!!!!!!!!!!!!!!!!!!! SEE MEEE
-        //}
+        if(randomDiceSide+1==6)
+            GameControl.Moveback_AUX(GameControl.players[whosTurn - 1], GameControl.players[whosTurn - 1].GetComponent<FollowThePath>().waypointIndex);
+        if (whosTurn == whosTurn_6)
+            GameControl.if_six_start = false;
+        whosTurn++;
+        if (whosTurn > number_players)
+            whosTurn = 1;
     }
 }

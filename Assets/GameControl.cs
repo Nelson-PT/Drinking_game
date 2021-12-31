@@ -29,6 +29,7 @@ public class GameControl : MonoBehaviour {
     public static bool just_a_roll = false;
     public static GameObject just_a_roll_player;
     public static bool if_six_start=false;
+   
 
     // Use this for initialization 
     void Start () {
@@ -36,7 +37,7 @@ public class GameControl : MonoBehaviour {
         //whoWinsTextShadow = GameObject.Find("WhoWinsText");
         //player1MoveText = GameObject.Find("Player1MoveText");
         //player2MoveText = GameObject.Find("Player2MoveText");
-
+        //dsadadsa
         player1 = GameObject.Find("Player1");
         player2 = GameObject.Find("Player2");
         player3 = GameObject.Find("Player3");
@@ -47,8 +48,8 @@ public class GameControl : MonoBehaviour {
         player8 = GameObject.Find("Player8");
         player9 = GameObject.Find("Player9");
         player10 = GameObject.Find("Player10");
-        button_chose1 = GameObject.Find("choose1");
-        button_chose2 = GameObject.Find("choose2");
+        button_chose1 = GameObject.Find("Chose1");
+        button_chose2 = GameObject.Find("Chose2");
         button_chose1.SetActive(false);
         button_chose2.SetActive(false);
 
@@ -228,23 +229,38 @@ public class GameControl : MonoBehaviour {
                 button_chose1.SetActive(true);
                 button_chose2.SetActive(true);
                 button_chose1.GetComponent<Button>().onClick.AddListener(Drink3);
-                button_chose1.GetComponent<Button>().onClick.AddListener(delegate {Goback8(player);});
+                button_chose2.GetComponent<Button>().onClick.AddListener(delegate {Goback8(player);});
                 break;
-             case 22: //go back 10
+            case 16: //roll the dice, drink and go back the result
+                if (!player.GetComponent<FollowThePath>().already_did_this_tile)
+                {
+                    just_a_roll = true;
+                    just_a_roll_player = player;
+                    player.GetComponent<FollowThePath>().already_did_this_tile = true;
+                    Dice.whosTurn--;
+                }
+                break;
+            case 22: //go back 10
                 player.GetComponent<FollowThePath>().movebackAllowed = true;
                 player.GetComponent<FollowThePath>().waypointIndex = player.GetComponent<FollowThePath>().waypointIndex - 11;
                 movedback = true;
                 break;
              case 23: //roll the dice if 6 go back to start
-                if_six_start = true;
+                if (!player.GetComponent<FollowThePath>().already_did_this_tile)
+                {
+                    if_six_start = true;
+                    Dice.whosTurn--;
+                    Dice.whosTurn_6 = Dice.whosTurn - 1;
+                    player.GetComponent<FollowThePath>().already_did_this_tile = true;
+                }
                 break;
                 //case 25: //talvez! coin head or tails!
-             case 26: //roll the dice, drink and go back the result
-                just_a_roll = true;
-                just_a_roll_player = player;
-                break;
              case 28: //drink and miss a turn
-                player.GetComponent<FollowThePath>().turn_miss = true;
+                if (!player.GetComponent<FollowThePath>().already_did_this_tile) 
+                { 
+                    player.GetComponent<FollowThePath>().turn_miss = true;
+                    player.GetComponent<FollowThePath>().already_did_this_tile = true;
+                }
                 break;
              case 30: //go back 8
                 player.GetComponent<FollowThePath>().movebackAllowed = true;
@@ -321,7 +337,7 @@ public class GameControl : MonoBehaviour {
     public static void Moveback_AUX(GameObject player, int dice)
     {
         player.GetComponent<FollowThePath>().movebackAllowed = true;
-        player.GetComponent<FollowThePath>().waypointIndex = player.GetComponent<FollowThePath>().waypointIndex - dice+1;
+        player.GetComponent<FollowThePath>().waypointIndex = player.GetComponent<FollowThePath>().waypointIndex - (dice+1);
         player.GetComponent<FollowThePath>().playerStartWaypoint = player.GetComponent<FollowThePath>().waypointIndex;
     }
 }

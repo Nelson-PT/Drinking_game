@@ -16,6 +16,7 @@ public class FollowThePath : MonoBehaviour {
     public bool movebackAllowed = false;
     public bool turn_miss = false;
     public int playerStartWaypoint = 0;
+    public bool already_did_this_tile = false;
 
     // Use this for initialization
     private void Start () {
@@ -27,10 +28,12 @@ public class FollowThePath : MonoBehaviour {
         if (moveAllowed)
         {
             Move();
+            already_did_this_tile = false;
         }
         if (movebackAllowed)
         {
             MoveBack();
+            already_did_this_tile = false;
         }
 	}
 
