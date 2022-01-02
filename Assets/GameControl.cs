@@ -8,7 +8,7 @@ public class GameControl : MonoBehaviour {
 
     public static GameObject player1, player2, player3,player4,player5,player6,player7,player8,player9,player10;
 
-    private GameObject button_chose1,button_chose2;
+    private static GameObject button_chose1,button_chose2;
 
    // public static String text, text1, text2, text3, text4, text5, text6, text7text8, text9, text10, text11, text12, text13, text14, text15, text16, text17, text18, text19, text20, text21, text22, text23, text24, text25, text26, text27, text28, text29, text30;
 
@@ -213,7 +213,7 @@ public class GameControl : MonoBehaviour {
         }
     }
 
-    private bool Moveback(GameObject player)
+    private static bool Moveback(GameObject player)
     {
         bool movedback = false;
         //Debug.Log(player.GetComponent<FollowThePath>().waypointIndex);
@@ -239,7 +239,7 @@ public class GameControl : MonoBehaviour {
                     player.GetComponent<FollowThePath>().already_did_this_tile = true;
                     Dice.whosTurn--;
                     if (Dice.whosTurn == 0)
-                        Dice.whosTurn++;
+                        Dice.whosTurn=number_players;
                 }
                 break;
             case 22: //go back 10
@@ -248,13 +248,15 @@ public class GameControl : MonoBehaviour {
                 movedback = true;
                 break;
              case 23: //roll the dice if 6 go back to start
-              /*  if (!player.GetComponent<FollowThePath>().already_did_this_tile)
+                if (!player.GetComponent<FollowThePath>().already_did_this_tile)
                 {
                     if_six_start = true;
                     Dice.whosTurn--;
-                    Dice.whosTurn_6 = Dice.whosTurn - 1;
+                    if (Dice.whosTurn == 0)
+                        Dice.whosTurn = number_players;
+                    Dice.whosTurn_6 = Dice.whosTurn;
                     player.GetComponent<FollowThePath>().already_did_this_tile = true;
-                }*/
+                }
                 break;
             //case 25: //talvez! coin head or tails!
             case 26: //roll the dice, drink and go back the result
@@ -263,8 +265,9 @@ public class GameControl : MonoBehaviour {
                     just_a_roll = true;
                     just_a_roll_player = player;
                     player.GetComponent<FollowThePath>().already_did_this_tile = true;
+                    Dice.whosTurn--;
                     if (Dice.whosTurn == 0)
-                        Dice.whosTurn++;
+                        Dice.whosTurn = number_players;
                 }
                 break;
             case 28: //drink and miss a turn
@@ -277,6 +280,7 @@ public class GameControl : MonoBehaviour {
              case 30: //go back 8
                 player.GetComponent<FollowThePath>().movebackAllowed = true;
                 player.GetComponent<FollowThePath>().waypointIndex = player.GetComponent<FollowThePath>().waypointIndex - 9;
+                Moveback(player);
                 movedback = true;
                 break;
              case 31: //go back to start
@@ -290,9 +294,12 @@ public class GameControl : MonoBehaviour {
     private void Stopmoveback(GameObject player)
     {
         if (player.GetComponent<FollowThePath>().movebackAllowed && player.GetComponent<FollowThePath>().transform.position == player.GetComponent<FollowThePath>().waypoints[player.GetComponent<FollowThePath>().waypointIndex].transform.position)
+        {
             player.GetComponent<FollowThePath>().movebackAllowed = false;
+            if (Moveback(player))
+                player.GetComponent<FollowThePath>().playerStartWaypoint = player.GetComponent<FollowThePath>().waypointIndex;
+        }
     }
-
 
     public static void MovePlayer(int playerToMove)
     {
@@ -333,13 +340,13 @@ public class GameControl : MonoBehaviour {
                 break;
         }
     }
-    void Drink3()
+    static void Drink3()
     {
         button_chose1.SetActive(false);
         button_chose2.SetActive(false);
         button_chose2.GetComponent<Button>().onClick.RemoveAllListeners();
     }
-    void Goback8(GameObject player)
+    static void Goback8(GameObject player)
     {
         button_chose1.SetActive(false);
         button_chose2.SetActive(false);

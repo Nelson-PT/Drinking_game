@@ -17,6 +17,8 @@ public class FollowThePath : MonoBehaviour {
     public bool turn_miss = false;
     public int playerStartWaypoint = 0;
     public bool already_did_this_tile = false;
+    public bool developer = false;
+    public int dev_tile = 0;
 
     // Use this for initialization
     private void Start () {
@@ -35,6 +37,15 @@ public class FollowThePath : MonoBehaviour {
             MoveBack();
             already_did_this_tile = false;
         }
+        if (developer)
+        {
+            transform.position = Vector2.MoveTowards(transform.position,
+            waypoints[dev_tile].transform.position,
+            moveSpeed * Time.deltaTime);
+            waypointIndex = dev_tile;
+            playerStartWaypoint = dev_tile;
+            //developer = false;
+}
 	}
 
     private void Move()

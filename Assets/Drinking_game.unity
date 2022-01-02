@@ -717,6 +717,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!212 &561850010
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1038,6 +1041,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!1 &652830879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,6 +1481,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 5
 --- !u!212 &891886665
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2112,6 +2121,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!212 &1289578565
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2308,6 +2320,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!212 &1388781723
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2650,6 +2665,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!1 &1477073538
 GameObject:
   m_ObjectHideFlags: 0
@@ -2815,6 +2833,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!212 &1506040735
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3358,6 +3379,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!1 &1730043190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3492,6 +3516,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!1 &1819167502
 GameObject:
   m_ObjectHideFlags: 0
@@ -3711,6 +3738,9 @@ MonoBehaviour:
   movebackAllowed: 0
   turn_miss: 0
   playerStartWaypoint: 0
+  already_did_this_tile: 0
+  developer: 0
+  dev_tile: 0
 --- !u!212 &2143893905
 SpriteRenderer:
   m_ObjectHideFlags: 0

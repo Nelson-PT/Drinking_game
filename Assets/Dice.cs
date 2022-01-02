@@ -43,6 +43,7 @@ public class Dice : MonoBehaviour {
             for (int i=0; i<10-number_players; i++)
             {
                 GameControl.players[i + number_players].SetActive(false);
+                //GameControl.players[i + number_players].layer = 1;
             }
             //Debug.Log(number_players);
         }
@@ -126,7 +127,7 @@ public class Dice : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
         }
         if (GameControl.just_a_roll_player != null)
-            GameControl.Moveback_AUX(GameControl.just_a_roll_player, randomDiceSide + 1);
+            GameControl.Moveback_AUX(GameControl.just_a_roll_player, randomDiceSide+1);
         //GameControl.diceSideThrown = randomDiceSide + 1;
         whosTurn++;
         if (whosTurn > number_players)
@@ -143,11 +144,13 @@ public class Dice : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
         }
         if(randomDiceSide+1==6)
-            GameControl.Moveback_AUX(GameControl.players[whosTurn - 1], GameControl.players[whosTurn - 1].GetComponent<FollowThePath>().waypointIndex);
-        if (whosTurn == whosTurn_6)
-            GameControl.if_six_start = false;
+            GameControl.Moveback_AUX(GameControl.players[whosTurn - 1], GameControl.players[whosTurn - 1].GetComponent<FollowThePath>().waypointIndex-1);
+        Debug.Log(whosTurn);
         whosTurn++;
         if (whosTurn > number_players)
             whosTurn = 1;
+        if (whosTurn == whosTurn_6)
+            GameControl.if_six_start = false;
+        play_player.text = "Player " + Dice.whosTurn + " to play!";
     }
 }
