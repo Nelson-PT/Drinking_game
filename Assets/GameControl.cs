@@ -280,7 +280,7 @@ public class GameControl : MonoBehaviour {
              case 30: //go back 8
                 player.GetComponent<FollowThePath>().movebackAllowed = true;
                 player.GetComponent<FollowThePath>().waypointIndex = player.GetComponent<FollowThePath>().waypointIndex - 9;
-                Moveback(player);
+                //Moveback_AUX(player,player.GetComponent<FollowThePath>().waypointIndex-7);
                 movedback = true;
                 break;
              case 31: //go back to start
